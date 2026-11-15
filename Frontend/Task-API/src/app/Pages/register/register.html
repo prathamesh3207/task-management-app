@@ -1,0 +1,94 @@
+<div class="login-wrapper">
+  <form class="login-card" [formGroup]="RegisterForm" (ngSubmit)="OnRegister()">
+    <div class="login-header">
+      <h2>Create Account</h2>
+      <p>Please enter your details to register</p>
+    </div>
+
+    <!-- Username -->
+    <div class="form-group">
+      <label for="Username">Username</label>
+      <input 
+        id="Username"
+        type="text" 
+        formControlName="Username" 
+        placeholder="Enter Username"
+        autocomplete="username"
+      />
+      @if (Username?.hasError('required') && Username?.touched) {
+        <span class="error-msg">Username is required.</span>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="Password">Password</label>
+      <input 
+        id="Password"
+        type="password" 
+        formControlName="Password" 
+        placeholder="Enter Password"
+        autocomplete="new-password"
+      />
+      @if (Password?.hasError('required') && Password?.touched) {
+        <span class="error-msg">Password is required.</span>
+      } @else if (Password?.hasError('maxlength') && Password?.touched) {
+        <span class="error-msg">Maximum password length is 8 characters.</span>
+      }
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label for="ConfirmPassword">Confirm Password</label>
+      <input 
+        id="ConfirmPassword"
+        type="password" 
+        formControlName="ConfirmPassword" 
+        placeholder="Enter Confirm Password"
+        autocomplete="new-password"
+      />
+      @if (ConfirmPassword?.hasError('required') && ConfirmPassword?.touched) {
+        <span class="error-msg">Confirm Password is required.</span>
+      } @else if (ConfirmPassword?.hasError('maxlength') && ConfirmPassword?.touched) {
+        <span class="error-msg">Maximum password length is 8 characters.</span>
+      } @else if (RegisterForm.hasError('passwordMismatch') && ConfirmPassword?.touched) {
+        <span class="error-msg">Passwords do not match.</span>
+      }
+    </div>
+
+    <!-- Roles -->
+    <div class="form-group">
+      <label for="Roles">Role</label>
+      <select id="Roles" formControlName="Roles">
+        <option value="" disabled selected>Select Role</option>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+      </select>
+      @if (Roles?.hasError('required') && Roles?.touched) {
+        <span class="error-msg">Role is required.</span>
+      } @else if (Roles?.hasError('maxlength') && Roles?.touched) {
+        <span class="error-msg">Maximum role length is 8 characters.</span>
+      }
+    </div>
+
+    <!-- Status Message Banner -->
+    @if (Message()) {
+      <div class="status-banner" role="alert">
+        {{ Message() }}
+      </div>
+    }
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="RegisterForm.invalid">
+        Register
+      </button>
+    <button type="button" class="btn btn-reset" (click)="OnReset()">
+      Reset
+    </button>
+      <button type="button" class="btn btn-secondary" routerLink="/Login">
+        Go to Login
+      </button>
+    </div>
+  </form>
+</div>

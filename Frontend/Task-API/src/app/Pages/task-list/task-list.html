@@ -1,0 +1,94 @@
+<div class="page-container">
+  <div class="header-section">
+    <div class="title-group">
+      <h1>Task List</h1>
+      <span class="task-count">{{ Lists().length }} tasks</span>
+    </div>
+
+    @if (IsAdmin()) {
+    <div class="search-bar">
+      <div class="input-wrapper">
+        <input #searchInput type="text" placeholder="Search by username..." (input)="SearchBy.set(searchInput.value)"
+          (keyup.enter)="OnSerch(SearchBy())" />
+      </div>
+      <button class="btn-primary" (click)="OnSerch(SearchBy())">Search</button>
+      <button class="btn-secondary" (click)="Reset(); searchInput.value = ''">
+        Reset
+      </button>
+    </div>
+    }
+  </div>
+
+  @if (Message()) {
+  <div class="status-message">{{ Message() }}</div>
+  }
+
+  <div class="table-wrapper">
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Remark</th>
+          <th>Created</th>
+          <th>Due Date</th>
+          @if (IsAdmin()) {
+          <th class="text-center">Edit</th>
+          }
+          <th class="text-center">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (task of Lists(); track task.id) {
+        <tr>
+          <td class="id-cell">#{{ task.id }}</td>
+          <td class="title-cell">{{ task.title }}</td>
+          <td class="desc-cell" [title]="task.description">
+            {{ task.description }}
+          </td>
+          <td>
+            <span class="badge status-badge" [attr.data-status]="task.isCompleted.toLowerCase()">
+              <span class="status-dot"></span>
+              {{ task.isCompleted }}
+            </span>
+          </td>
+          <td>
+            <span class="badge priority-badge" [attr.data-priority]="task.priority.toLowerCase()">
+              {{ task.priority || '—' }}
+            </span>
+          </td>
+          <td class="remark-cell">{{ task.remark || '—' }}</td>
+          <td class="date-cell">{{ task.createdDate | date: 'MMM d, y' }}</td>
+          <td class="date-cell due-cell">
+            {{ task.dueDate ? (task.dueDate | date: 'MMM d, y') : '—' }}
+          </td>
+
+          @if (IsAdmin()) {
+          <td class="text-center">
+            <button class="btn-edit" [routerLink]="['/Edit', task.id]">
+              Edit
+            </button>
+          </td>
+          }
+
+          <td class="text-center">
+            <button class="btn-delete" (click)="OnDelete(task.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+        }
+        @empty {
+        <tr>
+          <td [attr.colspan]="IsAdmin() ? 10 : 9" class="empty-state">
+            No tasks found.
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

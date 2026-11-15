@@ -1,0 +1,86 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>Add New Task</h1>
+  </div>
+
+  @if (message()) {
+    <div class="status-message">{{ message() }}</div>
+  }
+
+  <form #taskForm="ngForm" (ngSubmit)="onAddTask()">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input
+        id="title"
+        name="Title"
+        type="text"
+        required
+        placeholder="Enter task title..."
+        [(ngModel)]="task.Title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea
+        id="description"
+        name="Description"
+        required
+        placeholder="Describe what needs to be done..."
+        [(ngModel)]="task.Description"
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="priority">Priority</label>
+        <select id="priority" name="Priority" [(ngModel)]="task.Priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="IsCompleted" [(ngModel)]="task.IsCompleted">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input
+          id="dueDate"
+          name="DueDate"
+          type="date"
+          [(ngModel)]="task.DueDate"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="remark">Remark</label>
+        <input
+          id="remark"
+          name="Remark"
+          type="text"
+          placeholder="Optional note..."
+          [(ngModel)]="task.Remark"
+        />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" routerLink="/List">
+        Cancel
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="taskForm.invalid">
+        Create Task
+      </button>
+    </div>
+  </form>
+</div>

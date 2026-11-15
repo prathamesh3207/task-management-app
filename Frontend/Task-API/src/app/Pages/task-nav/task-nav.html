@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="logo-dot"></span>
+    <p>Task APP</p>
+  </div>
+
+  <div class="nav-links">
+    <button routerLink="/List" routerLinkActive="active-link">Home</button>
+    <button routerLink="/Add" routerLinkActive="active-link">Add Task</button>
+    
+
+    <div class="user-section">
+      <label class="user-badge">
+        <span class="status-indicator"></span>
+        User : {{ UserID() }}
+      </label>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+  </div>
+</nav>
