@@ -1,0 +1,9 @@
+﻿namespace Task_API.DTO
+{
+    public class TaskResponseDTO
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public TaskListDTO? Data { get; set; }
+    }
+}
