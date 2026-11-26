@@ -16,7 +16,8 @@ jobs:
       contents: read #This is required for actions/checkout
     defaults:
       run:
-        working-directory: Backend/Task-API/Task-API/Task-API.csproj
+        working-directory: Backend/Task-API/Task-API
+
 
 
     steps:
